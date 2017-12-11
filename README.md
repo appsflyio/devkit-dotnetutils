@@ -32,51 +32,18 @@ Please contact integrations@appsfly.io for your credientials.
 
 # Integration options  
 
-### Option 1: SDK
-The SDK can be included to handle authorization. There is no need for you to handle checksum generation and verification.
+### Option 1: Appsfly DLL Util
+The DLL can be included to handle authorization. There is no need for you to handle checksum generation and verification.
 
-#### Setup SDK
+#### Setup DLL
 
-Maven
-###### Step 1. Add repo to your root pom.xml
+Add References
+###### Step 1. Add dll to your project references
 ```
-<repositories>
-     <repository>
-         <id>jitpack.io</id>
-         <url>https://jitpack.io</url>
-     </repository>
-</repositories>
+// Util DLL can be downloaded from this repo
 ```
 
-###### Step 2. Add the dependency
-```
-<dependencies>
-     <dependency>
-         <groupId>com.github.appsflyio</groupId>
-         <artifactId>devkit-javautils</artifactId>
-         <version>0.0.7</version>
-     </dependency>
-</dependencies>
-```
-
-Gradle
-###### Step 1. Add it in your root build.gradle at the end of repositories
-```
-allprojects {
-	repositories {
-		...
-		maven { url 'https://jitpack.io' }
-	}
-}
-```
-
-###### Step 2. Add the dependency
-```
-dependencies {
-	compile 'com.github.appsflyio:devkit-javautils:0.0.7'
-}
-
-```
+###### Step 2. Add the namespace "appsfly_dotnetutil"
 
 #### Configuration
 ```
@@ -84,18 +51,8 @@ AppInstance.AFConfig config = new AppInstance.AFConfig("EXECUTOR_URL", "SECRET_K
 ```  
 #### Execution
 ```
-AppInstance travelProvider = new AppInstance(config, "MODULE_HANDLE");
-travelProvider.exec("INTENT", JSONObject("PAYLOAD"), "UUID", new Callback() {
-    @Override
-    public void onResponse(JSONObject response) {
-        // We have already verified the checksum from you
-    }
-
-    @Override
-    public void onError(JSONObject error) {
-      // Handle error
-    }
-});
+AppInstance activitiesProvider = new AppInstance(config, "MODULE_HANDLE");
+activitiesProvider.exec("INTENT", "PAYLOAD_TXT", "UUID", (result) => { Console.WriteLine(result) });
 ```
 
 ### Option 2: API Endpoint
@@ -113,7 +70,7 @@ POST
 | X-UUID | [UUID](#UUID) |
 | X-App-Key | [APP_KEY](#APP_KEY)|
 | X-Module-Handle | [MODULE_HANDLE](#MODULE_HANDLE)|
-| X-Checksum | CHECKSUM. Please go through [this gist](https://github.com/appsflyio/devkit-javautils/blob/master/src/main/java/io/appsfly/crypto/CtyptoUtil.java) to generate checksum. |
+| X-Checksum | CHECKSUM. Please use [Appsfly DLL](https://github.com/appsflyio/devkit-javautils/blob/master/src/main/java/io/appsfly/crypto/CtyptoUtil.java) to generate and verify checksum. |
 | Content-Type | Must be "application/json" |
 
 #### Body
