@@ -53,6 +53,8 @@ AppInstance.AFConfig config = new AppInstance.AFConfig("EXECUTOR_URL", "SECRET_K
 ```
 AppInstance activitiesProvider = new AppInstance(config, "MODULE_HANDLE");
 activitiesProvider.exec("INTENT", "PAYLOAD_TXT", "UUID", (result) => { Console.WriteLine(result) });
+OR
+activitiesProvider.execSync("INTENT", "PAYLOAD_TXT", "UUID", (result) => { Console.WriteLine(result) });
 ```
 
 ### Option 2: API Endpoint
